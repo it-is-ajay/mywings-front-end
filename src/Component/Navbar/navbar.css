@@ -1,0 +1,7 @@
+#search::placeholder {
+  color: #ea1b3d;
+}
+
+.crown:hover {
+  transform: rotate(-10deg);
+}
