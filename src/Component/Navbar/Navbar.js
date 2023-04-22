@@ -4,7 +4,7 @@ export function Navebar() {
     <nav className="navbar navbar-expand-lg navbar-dark " style={{ backgroundColor: "#ea1b3d" }}>
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
-          <img height={"25px"} width={"160px"} style={{marginTop:"-10px"}} src="/img/logo-no-background.png" />
+          <img height={"25px"} width={"125px"} style={{marginTop:"-10px"}} src="/img/logo-no-background.png" />
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
