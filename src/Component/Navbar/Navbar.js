@@ -21,6 +21,9 @@ export function Navebar() {
             <li className="nav-item " style={{marginTop:'-5px'}}>
               <Link className='navLinks' to="/collaborate"> Collaborate </Link>
             </li>
+            <li className="nav-item " style={{marginTop:'-5px'}}>
+              <Link className='navLinks' to="/signup"> Sign Up </Link>
+            </li>
           </ul>
           <div className="d-flex">
             <a className="nav-link active" aria-current="page" href="#">

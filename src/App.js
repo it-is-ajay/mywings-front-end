@@ -3,12 +3,17 @@ import './App.css';
 import { Home } from './Component/Home/Home';
 import { Navebar } from './Component/Navbar/Navbar';
 import { Profile } from './Component/Profile/Profile';
+import SignUp from './Component/User/SignUp/SignUp';
+import SignIn from './Component/User/SignIn/Signin';
+import ProtectedRoute from './Component/ProtectedRoute';
 
 function App() {
   return <>
     <Routes>
-      <Route path='/' element={<Home/>}/>
+      <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/signup' element={<SignUp/>}/>
+      <Route path='/signin' element={<SignIn/>}/>
     </Routes>
    
   </>
