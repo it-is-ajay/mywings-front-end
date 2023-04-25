@@ -1,0 +1,80 @@
+.HomeContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-top: -15px;
+}
+
+.HomeScrollBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 90vh;
+    width: 500px;
+}
+
+.PostHeader{
+    width: 95%;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.PostHeaderProfile{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.Ellipsis{
+    font-size: 20px;
+}
+
+.HeaderLine{
+    width: 90%;
+    border: 1px solid black;
+}
+
+.Post{
+    margin-top: -10px;
+    width: 420px;
+    height: 420px;
+}
+
+.PostFunctionality{
+    width: 88%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.AddComment::placeholder{
+    color: black;
+    opacity: 0.8;
+}
+
+.AddComment{
+    height: 30px;
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 15px;
+}
+
+.ViewComments{
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+}
+
+.ViewComments:hover{
+    color:black;
+}
+
+.ShareComment{
+    transform:rotate(45deg);
+}
