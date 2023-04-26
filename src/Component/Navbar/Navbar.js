@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import '../Navbar/navbar.css';
 export function Navebar() {
   return <>
-    <nav className="navbar navbar-expand-lg navbar-dark sticky-top" style={{ backgroundColor: "#ea1b3d" }}>
+    <nav className="navbar navbar-expand-lg navbar-dark sticky-top" style={{ backgroundColor: "#4abdac" }}>
       <div className="container-fluid">
         <a className="navbar-brand me-5" href="#">
           <img height={"25px"} width={"125px"} style={{ marginTop: "-10px" }} src="/img/logo-no-background.png" />
@@ -27,7 +27,7 @@ export function Navebar() {
           </ul>
           <div className="d-flex">
             <a className="nav-link active" aria-current="page" href="#">
-              <i class='fas fa-crown  crown' style={{ fontSize: "25px", color: "yellow" }}></i>
+              <i class='fas fa-crown  crown' style={{ fontSize: "25px", color: "#f7b733" }}></i>
             </a>
             <span className='post'>
             <a className="nav-link active" aria-current="page" href="#">
@@ -36,8 +36,8 @@ export function Navebar() {
             </span>
             <div className="d-flex">
               <div className="input-group mt-1">
-                <input id="search" style={{ height: "35px", color: "#ea1b3d" }} type="text" className="form-control" placeholder="Search" />
-                <span style={{ height: "35px", backgroundColor: "white" }} className="input-group-text"><i className="bi bi-search" style={{ color: "#ea1b3d", fontWeight: "bold", fontSize: "20px" }}></i></span>
+                <input id="search" style={{ height: "35px", color: "#fc4a1a" }} type="text" className="form-control" placeholder="Search" />
+                <span style={{ height: "35px", backgroundColor: "white" }} className="input-group-text"><i className="bi bi-search" style={{ color: "#fc4a1a", fontWeight: "bold", fontSize: "20px" }}></i></span>
               </div>
               <a className="nav-link" href="#">
                 <i class="bi bi-bell-fill" style={{ color: "lightGray" }}></i>
