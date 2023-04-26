@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux"
 import { Navebar } from "../Navbar/Navbar"
 import "./profile.css"
 
 export function Profile() {
+    const {user} = useSelector(state=>state.user);
     return <>
         <Navebar />
         <div className="d-flex justify-content-center" style={{ height: "100vh", marginTop: "-15px"}}>
@@ -13,7 +15,7 @@ export function Profile() {
                     <div className="col-lg-9 d-flex" style={{ height: "100%" }}>
                         <div className=" ProfileContent">
                             <div className=" ProfileRow mb-3 ">
-                                <div className="UserName">its_cheeku</div>
+                                <div className="UserName">{user.userName}</div>
                                 <div>
                                     <button className="me-3">Edit profile</button>
                                     <img src="/img/gear-fill.svg"/>
@@ -25,7 +27,7 @@ export function Profile() {
                                 <div className="col-sm-4">108 following</div>
                             </div>
                             <div className="ProfileRow">
-                                <div>chekku singh</div>
+                                <div>{user.name}</div>
                             </div>
                         </div>
                     </div>
