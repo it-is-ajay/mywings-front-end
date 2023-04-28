@@ -12,9 +12,11 @@ function SignIn() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
+       
         try {
             event.preventDefault();
-            let response = await axios.post("http://localhost:3000/user/signIn", { usernameOrEmail: email, password });
+            let response = await axios.post("http://localhost:3000/user/signIn", { usernameOrEmail:email, password });
+            console.log(response)
             dispatch(setUser(response.data.user));
             dispatch(setToken(response.data.token));
             navigate("/");
