@@ -10,12 +10,12 @@ import ProtectedRoute from './Component/ProtectedRoute';
 function App() {
   return <>
     <Routes>
-      <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
-      <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
-      <Route path='/signup' element={<SignUp/>}/>
-      <Route path='/signin' element={<SignIn/>}/>
+      <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+      <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path='/signup' element={<SignUp />} />
+      <Route path='/signin' element={<SignIn />} />
     </Routes>
-   
+
   </>
 }
 

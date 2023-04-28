@@ -5,22 +5,33 @@ import axios from "axios";
 import post from '../../poloadicon.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useSelector } from 'react-redux';
 export function Navebar() {
 
   const [file, setfile] = useState("");
   const [caption, setcaption] = useState("");
   const [imgpath, setimgpath] = useState(post);
+  const [uploadbuttonstatus, setuploadbuttonstatus] = useState(true);
+  const { user } = useSelector((state) => state.user)
+  
 
   let date = new Date();
   date = date.getDate() + "/" + ((date.getMonth() * 1) + 1) + "/" + date.getFullYear();
 
-  let userId = "643929361e34d71a3eec2d54";
+  const uploadbutton = () => {
+    setuploadbuttonstatus(true)
+    setimgpath(post)
+    setcaption("")
+  }
+
   let locationOfYour = "indore";
+
   const uploadImage = (event) => {
     event.preventDefault();
-    setfile(event.target.files[0]);
     setimgpath(URL.createObjectURL(event.target.files[0]));
+    setfile(event.target.files[0]);
+    setuploadbuttonstatus(false);
+
   }
 
   const submitbutton = async (event) => {
@@ -30,12 +41,14 @@ export function Navebar() {
     formdata.append('file', file);
     formdata.append('date', date);
     formdata.append('caption', caption);
-    formdata.append('userId', userId);
+    formdata.append('userId', user._id);
     formdata.append('locationOfYour', locationOfYour);
 
     try {
       let response = await axios.post(url, formdata)
-      if (response){
+      if (response) {
+        setimgpath(post);
+        setcaption("")
         toast("post uploaded");
       }
     } catch (err) {
@@ -44,7 +57,7 @@ export function Navebar() {
   }
 
   return <>
-  <ToastContainer/>
+    <ToastContainer />
     <nav className="navbar navbar-expand-lg navbar-dark sticky-top" style={{ backgroundColor: "#4abdac" }}>
       <div className="container-fluid">
         <a className="navbar-brand me-5" href="#">
@@ -55,16 +68,16 @@ export function Navebar() {
         </button>
         <div className="collapse navbar-collapse stroke" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item " style={{marginTop:'-5px'}}>
+            <li className="nav-item " style={{ marginTop: '-5px' }}>
               <Link className='navLinks' to="/"> Home </Link>
             </li>
-            <li className="nav-item " style={{marginTop:'-5px'}}>
+            <li className="nav-item " style={{ marginTop: '-5px' }}>
               <Link className='navLinks' to="/about"> About </Link>
             </li>
-            <li className="nav-item " style={{marginTop:'-5px'}}>
+            <li className="nav-item " style={{ marginTop: '-5px' }}>
               <Link className='navLinks' to="/collaborate"> Collaborate </Link>
             </li>
-            <li className="nav-item " style={{marginTop:'-5px'}}>
+            <li className="nav-item " style={{ marginTop: '-5px' }}>
               <Link className='navLinks' to="/signup"> Sign Up </Link>
             </li>
           </ul>
@@ -73,7 +86,7 @@ export function Navebar() {
               <i class='fas fa-crown  crown' style={{ fontSize: "25px", color: "#f7b733" }}></i>
             </a>
             <span className='post'>
-            <a className="nav-link active" data-bs-toggle="modal"
+              <a className="nav-link active" data-bs-toggle="modal"
                 data-bs-target="#exampleModal" aria-current="page" >
                 <i class="bi bi-plus-square me-3 AddPost"></i>
               </a>
@@ -93,39 +106,42 @@ export function Navebar() {
           </div>
         </div>
       </div>
-  </nav>
+    </nav>
 
 
-  
-  <div
+
+    <div
       className="modal fade"
       id="exampleModal"
       tabIndex={-1}
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div className="modal-dialog">
+      <div className="modal-dialog" style={{ width: "400px" }}>
         <div className="modal-content">
           <div className='text-end'>
-            <button type="button" className="btn-close m-2" data-bs-dismiss="modal" aria-label="Close" />
+            <button onClick={uploadbutton} type="button" className="btn-close m-2" data-bs-dismiss="modal" aria-label="Close" />
           </div>
 
           <div className="text-center">
             <label for="file-input">
-              <img style={{ height: "200px" }} src={imgpath} />
+                <img style={{ height: "250px" }} src={imgpath} /><br /><br />
             </label>
 
           </div>
           <div className='text-center'>
             <form onSubmit={submitbutton}>
-              <input onChange={(event) => setcaption(event.target.value)} className="m-2" placeholder="enter caption" />
-              <input onChange={uploadImage} name="file" style={{ display: "none" }} id="file-input" type="file" />
+              <textarea style={{ width: "80%" }} onChange={(event) => setcaption(event.target.value)} value={caption} className="m-2" placeholder="enter caption" />
+              <input multiple="" accept='image/jpeg,image/png,image/heic,image/heif,video/mp4,video/quicktime' onChange={uploadImage} name="file" style={{ display: "none" }} id="file-input" type="file"/><br />
+              <button disabled={uploadbuttonstatus} className='m-2 btn btn-success' style={{ width: "80%" }} data-bs-dismiss="modal" type="submit">upload</button><br />
+
               <br />
-              <button className='m-2 btn btn-success' data-bs-dismiss="modal" type="submit">upload</button>
+
             </form>
+
           </div>
         </div>
       </div>
     </div>
-  </>
+  </>
 }
