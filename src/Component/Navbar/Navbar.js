@@ -83,7 +83,7 @@ export function Navebar() {
           </ul>
           <div className="d-flex">
             <a className="nav-link active" aria-current="page" href="#">
-              <i class='fas fa-crown  crown' style={{ fontSize: "25px", color: "#f7b733" }}></i>
+              <i className='fas fa-crown  crown' style={{ fontSize: "25px", color: "#f7b733" }}></i>
             </a>
             <span className='post'>
               <a className="nav-link active" data-bs-toggle="modal"
@@ -97,7 +97,7 @@ export function Navebar() {
                 <span style={{ height: "35px", backgroundColor: "white" }} className="input-group-text"><i className="bi bi-search" style={{ color: "#fc4a1a", fontWeight: "bold", fontSize: "20px" }}></i></span>
               </div>
               <a className="nav-link" href="#">
-                <i class="bi bi-bell-fill" style={{ color: "lightGray" }}></i>
+                <i className="bi bi-bell-fill" style={{ color: "lightGray" }}></i>
               </a>
             </div>
             <Link className="nav-link" to="/profile">

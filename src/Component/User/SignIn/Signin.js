@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../../redux-conflig/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,10 +22,12 @@ function SignIn() {
             navigate("/");
         }
         catch (err) {
+            toast.error("wrong email password");
             console.log(err);
         }
     }
     return <>
+        <ToastContainer />
         <div style={{ height: "100vh", width: "100%", backgroundColor: "#ffffff", position: "absolute", display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div className="container container1" style={{ padding: "5vw", width: "60%" }}>
                 <div className="row row1" style={{ height: 400 }}>
