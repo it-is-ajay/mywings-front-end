@@ -1,24 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./signup.css";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../../../redux-conflig/userSlice";
+import { ToastContainer, toast } from "react-toastify";
 export default function SignUp() {
     const [name,setName] = useState("");
     const [userName,setUserName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [contact,setContact] = useState("");
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const eventHandler = async (event)=>{
         try{
             event.preventDefault();
             let response = await axios.post("http://localhost:3000/user/signUp",{name,userName,email,password,contact});
+            dispatch(setUser(response.data.user));
+            dispatch(setToken(response.data.token));
+            navigate("/");
         }
         catch(err){
+            toast.error(err.response.data.message[0].msg);
             console.log(err);
         }
     }
     return <>
+    <ToastContainer />
     <div style={{height:"100vh",width:"100%", backgroundColor:"#ffffff",position:"absolute" , display:"flex" , justifyContent:"center", alignItems:"center"}}>
         <div className="container" style={{ padding: "2vw", width: "60%" }}>
             <div className="row row1" style={{ height: 500 }}>

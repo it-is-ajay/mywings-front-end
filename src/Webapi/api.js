@@ -3,5 +3,7 @@ export default{
     addpost:"/post/uploadPost",
     getcomment:"/post/getComment",
     postcomment:"/post/comment",
-    getpost:"/post/getAllPost"
+    getpost:"/post/getAllPost",
+    doLike:"/post/like",
+    savePost:"/user/savePost"
 }

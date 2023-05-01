@@ -6,6 +6,12 @@ const slice = createSlice({
         user:null,
         token:null
     },reducers:{
+        savePost: (state,action)=>{
+            state.user.savePosts.push(action.payload)
+        },
+        removePost:(state,action)=>{
+            state.user.savePosts.splice(action.payload,1);
+        },
         setToken:(state,action)=>{
             state.token = action.payload;
         },
@@ -14,5 +20,5 @@ const slice = createSlice({
         }
     }
 });
-export const{setToken,setUser} = slice.actions
+export const{setToken,setUser,savePost,removePost} = slice.actions
 export default slice.reducer;

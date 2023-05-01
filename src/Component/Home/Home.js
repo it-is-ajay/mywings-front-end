@@ -9,56 +9,63 @@ import axios from "axios";
 import avtar from '../../avtar1.png';
 import api from "../../Webapi/api";
 import Loader from "../Loader/loader";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import InfiniteScroll from "react-infinite-scroller";
+import { fetchPost, setPosts } from "../../redux-conflig/postSlice";
+import { removePost, savePost } from "../../redux-conflig/userSlice";
+import { ViewCommentModal } from "../Modal/ViewComment.modal";
 
 export function Home() {
     const [comment, setcomment] = useState("");
-    const dispach = useDispatch();
     const { user } = useSelector((state) => state.user)
-    const [loader, setloader] = useState(true)
-    const [postlist, setpostlist] = useState([]);
-    const [page, setPage] = useState(1);
+    const { postList, isLoading, error } = useSelector(state => state.posts);
+    const dispach = useDispatch();
 
-    const [commentlist, setcommentlist] = useState([]);
-    const fetchpost = createAsyncThunk("fetchPost", async () => {
-        try {
-            let response = await axios.get(api.getpost + `?page=${page}`);
-            if (response) {
-                setloader(false);
-                setPage(page + 1)
-                setpostlist([...postlist, ...response.data.result]);
-            }
+
+    // do like
+    const doLike = async (postId) => {
+        const divElement = document.getElementById("div" + postId);
+        let postIndex = await postList.findIndex((posts) => posts._id == postId);
+        const iconElement = divElement.querySelector('i');
+        if (iconElement && iconElement.classList.contains('bi-suit-heart')) {
+            let updatedPost = await { ...postList[postIndex], likeItems: [...postList[postIndex].likeItems, { friendUserId: user._id }] };
+            let updatedPostList = [...postList.slice(0, postIndex), updatedPost, ...postList.slice(postIndex + 1)];
+            dispach(setPosts(updatedPostList));
+        } else if (iconElement && iconElement.classList.contains('bi-heart-fill')) {
+            let likeIndex = await postList[postIndex].likeItems.findIndex((data) => data.friendUserId == user._id);
+            let updatedLikeItems = [...postList[postIndex].likeItems.slice(0, likeIndex), ...postList[postIndex].likeItems.slice(likeIndex + 1)];
+            let updatedPost = { ...postList[postIndex], likeItems: updatedLikeItems };
+            let updatedPostList = [...postList.slice(0, postIndex), updatedPost, ...postList.slice(postIndex + 1)];
+            dispach(setPosts(updatedPostList));
         }
-        catch (err) {
-            console.log(err)
-            toast.error("something went wrong");
-        }
-    })
+        await axios.post(api.doLike, { postId, friendUserId: user._id })
+    }
+    // do like
+
+
 
     const viewComment = async (postid) => {
-        try {
-            let response = await axios.post(api.getcomment, { userPostId: postid });
-            setcommentlist(response.data.result)
-            if (!response.data.result.length) {
-                toast.info("no any comment on this post")
-            }
-        }
-        catch (err) {
-            console.log(err);
-            toast.error("intenal server error")
-        }
+        // try {
+        //     let response = await axios.post(api.getcomment, { userPostId: postid });
+        //     if (!response.data.result.length) {
+        //         toast.info("no any comment on this post")
+        //     }
+        // }
+        // catch (err) {
+        //     console.log(err);
+        //     toast.error("intenal server error")
+        // }
     }
-    const sendcomment = async (userPostId) => {
+
+
+    // add comment
+    const sendcomment = async (postId) => {
         if (!comment)
             toast.error("please enter comment");
         else {
             try {
-                let response = await axios.post(api.postcomment, { friendUserId: user._id, userPostId: userPostId, comment: comment });
-                console.log(response)
+                setcomment("")
+                let response = await axios.post(api.postcomment, { friendUserId: user._id, postId, comment: comment });
                 if (response)
-                    setcomment("")
-                toast.success("comment posted")
+                    toast.success("comment posted")
 
             }
             catch (err) {
@@ -66,70 +73,118 @@ export function Home() {
             }
         }
     }
+    // add comment
+
+    // save posts
+    const savePosts = async (postId) => {
+        const divElement = document.getElementById("save" + postId);
+        const iconElement = divElement.querySelector('i');
+        if (iconElement && iconElement.classList.contains('bi-bookmark')) {
+            dispach(savePost({ postId }));
+        } else if (iconElement && iconElement.classList.contains('bi-bookmark-fill')) {
+            dispach(removePost(user.savePosts.findIndex((item) => item.postId == postId)));
+        }
+        await axios.post(api.savePost, { userId: user._id, postId });
+    }
+    // save posts
+
+
     useEffect(() => {
-        dispach(fetchpost());
+        (!postList.length) && dispach(fetchPost());
     }, [])
 
 
     return <>
         <Navebar />
-        <ToastContainer/>
-        <div className="HomeContainer containerfluid">
-            <InfiniteScroll
-                dataLength={postlist.length}
-                next={fetchpost}
-                hasMore={postlist.length < 100}
-                loader={<Loader />}
-                endMessage={<p>Data End...</p>}>
-
-                {postlist.map((posts) =>
-                    <div className="HomeScrollBox ">
-                        <div className="PostHeader  mt-1">
-                            <div className="p-2">
-                                <img src={avtar} className="PostHeaderProfile ms-2" />
-                                <span className="ms-3">{posts.userId.name}</span>
-                            </div>
-                            <div className="p-2">
-                                <i className="bi bi-three-dots me-2 Ellipsis"></i>
-                            </div>
-                        </div>
-                        <hr className="HeaderLine mt-1" />
-                        <div className="PostBox bg-secondary">
-                            <img className="Posts" src={api.file+posts.file} />
-                        </div>
-                        <div className="PostFunctionality">
-                            <div className="">
-                                {posts.likeItems.some((item) => item.friendUserId == "643929361e34d71a3eec2d54") ?
-                                    <i className="bi bi-heart-fill ms-2" style={{ fontSize: '20px', color: "#ea1b3d" }}></i> :
-                                    <i className="bi bi-suit-heart ms-2" style={{ fontSize: '20px', color: "#ea1b3d" }}></i>
-                                }
-                            </div>
-                            <div className="">
-                                <i className="bi bi-bookmark-fill me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)" }}></i>
-                            </div>
-                        </div>
-                        <hr className="HeaderLine mt-1" />
-                        <div style={{ width: "90%", marginTop: "-12px" }}>
-                            {posts.likeItems.length}: likes
-                        </div>
-                        <div style={{ width: "90%", marginTop: "-1px", fontSize: "15px" }}>
-                            {posts.caption}
-                        </div>
-                        <div style={{ width: "90%", marginTop: "-5px" }}>
-                            <a onClick={() => viewComment(posts._id)} className="ViewComments" href="#">View all comments</a>
-                        </div>
-                        <div style={{ width: "90%", marginTop: "-5px" }} className="d-flex " >
-                            <div style={{ width: "93%" }}>
-                                <input onChange={(event) => setcomment(event.target.value)} className="AddComment " value={comment} type="text" placeholder="Add a comment..." />
-                            </div>
-                            <div className="ShareComment">
-                                <button onClick={() => sendcomment(posts._id)} className="" style={{ outline: "none", border: "none", background: "none" }}><i className="bi bi-send-fill"></i></button>
-                            </div>
-                        </div>
-                        <hr className="mt-1 w-100" style={{ border: "1px solid black" }} />
-                    </div>
-                )}
-            </InfiniteScroll>
+        <ToastContainer />
+        <div className="d-flex justify-content-center">
+            {(isLoading) && <Loader />}
         </div>
+        <div className="HomeContainer containerfluid">
+            {postList.map((posts, index) =>
+                <div key={index} className="HomeScrollBox ">
+                    <div className="PostHeader  mt-1">
+                        <div className="p-2">
+                            <img src={avtar} className="PostHeaderProfile ms-2" />
+                            <span className="ms-3">{posts.userId.name}</span>
+                        </div>
+                        <div className="p-2">
+                            <div id="container" >
+                                    <div id="menu-wrap">
+                                        <input type="checkbox" className="toggler" />
+                                        <div className="dots">
+                                            <div></div>
+                                        </div>
+                                        <div className="menu">
+                                            <div>
+                                                <ul>
+                                                    <li><a href="#" className="link">View Profile</a></li>
+                                                    <li><a href="#" className="link">Save</a></li>
+                                                    <li><a href="#" className="link">Report</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr className="HeaderLine mt-1" />
+                    <div className="PostBox bg-secondary">
+                        <img className="Posts" src={api.file + posts.file} />
+                    </div>
+                    <div className="PostFunctionality">
+                        {/* dynamic like button */}
+                        <div className="" id={"div" + posts._id}>
+                            {posts.likeItems.some((item) => item.friendUserId == user._id)
+                                ? <i onClick={() => { doLike(posts._id) }} className="bi bi-heart-fill ms-2" style={{ fontSize: '20px', color: "#ea1b3d" }}></i>
+                                : <i onClick={() => { doLike(posts._id) }} className="bi bi-suit-heart ms-2 test" style={{ fontSize: '20px', color: "#ea1b3d" }}></i>
+                            }
+                        </div>
+                        {/* dynamic like button */}
+
+                        {/* dynamic save button */}
+                        <div className="" id={"save" + posts._id}>
+                            {user.savePosts.some((item) => item.postId == posts._id)
+                                ? <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark-fill me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)" }}></i>
+                                : <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)" }}></i>
+                            }
+                        </div>
+                        {/* dynamic save button */}
+                    </div>
+                    <hr className="HeaderLine mt-1" />
+
+                    {/* like count */}
+                    <div style={{ width: "90%", marginTop: "-12px" }}>
+                        {posts.likeItems.length}: likes
+                    </div>
+                    {/* like count */}
+
+                    {/* post caption */}
+                    <div style={{ width: "90%", marginTop: "-1px", fontSize: "15px" }}>
+                        {posts.caption}
+                    </div>
+                    {/* post caption */}
+
+
+                    <div style={{ width: "90%", marginTop: "-5px" }}>
+                        <a onClick={() => viewComment(posts._id)} className="ViewComments" href="#popup">View all comments</a>
+                    </div>
+
+                    {/* add comment */}
+                    <div style={{ width: "90%", marginTop: "-5px" }} className="d-flex " >
+                        <div style={{ width: "93%" }}>
+                            <input onChange={(event) => setcomment(event.target.value)} className="AddComment " value={comment} type="text" placeholder="Add a comment..." />
+                        </div>
+                        <div className="ShareComment">
+                            <button onClick={() => sendcomment(posts._id)} className="" style={{ outline: "none", border: "none", background: "none" }}><i className="bi bi-send-fill"></i></button>
+                        </div>
+                    </div>
+                    {/* add comment */}
+
+                    <hr className="mt-1 w-100" style={{ border: "1px solid black" }} />
+                </div>
+            )}
+        </div>
+        <ViewCommentModal/>
     </>
 }

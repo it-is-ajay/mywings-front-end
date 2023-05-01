@@ -1,6 +1,6 @@
 function Loader(){
-    return <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
+    return <div className="spinner-border" role="status">
+    <span className="sr-only">Loading...</span>
   </div>
 }
 export default Loader;
