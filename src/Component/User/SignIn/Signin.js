@@ -16,14 +16,12 @@ function SignIn() {
         try {
             event.preventDefault();
             let response = await axios.post("http://localhost:3000/user/signIn", { usernameOrEmail:email, password });
-            console.log(response)
             dispatch(setUser(response.data.user));
             dispatch(setToken(response.data.token));
             navigate("/");
         }
         catch (err) {
             toast.error("wrong email password");
-            console.log(err);
         }
     }
     return <>
