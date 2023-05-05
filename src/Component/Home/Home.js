@@ -105,32 +105,35 @@ export function Home() {
                 <div key={index} className="HomeScrollBox ">
                     <div className="PostHeader  mt-1">
                         <div className="p-2">
-                            <img src={avtar} className="PostHeaderProfile ms-2" />
+                            {/* <img src={posts.userId.profilePhoto ? (api.profilepic+posts.userId.profilePhoto) : avtar} className="PostHeaderProfile ms-2" /> */}
+                            <img src={posts.userId.profilePhoto ? api.profilepic + posts.userId.profilePhoto : avtar} className="PostHeaderProfile ms-2" />
+
                             <span className="ms-3">{posts.userId.name}</span>
                         </div>
                         <div className="p-2">
                             <div id="container" >
-                                    <div id="menu-wrap">
-                                        <input type="checkbox" className="toggler" />
-                                        <div className="dots">
-                                            <div></div>
-                                        </div>
-                                        <div className="menu">
-                                            <div>
-                                                <ul>
-                                                    <li><a href="#" className="link">View Profile</a></li>
-                                                    <li><a href="#" className="link">Save</a></li>
-                                                    <li><a href="#" className="link">Report</a></li>
-                                                </ul>
-                                            </div>
+                                <div id="menu-wrap">
+                                    <input type="checkbox" className="toggler" />
+                                    <div className="dots">
+                                        <div></div>
+                                    </div>
+                                    <div className="menu">
+                                        <div>
+                                            <ul>
+                                                <li><a href="#" className="link">View Profile</a></li>
+                                                <li><a href="#" className="link">Save</a></li>
+                                                <li><a href="#" className="link">Report</a></li>
+                                            </ul>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <hr className="HeaderLine mt-1" />
                     <div className="PostBox bg-secondary">
-                        <img className="Posts" src={api.file + posts.file} />
+                        {posts.type=="video/mp4" ? <video  loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
+                       
                     </div>
                     <div className="PostFunctionality">
                         {/* dynamic like button */}
@@ -185,6 +188,6 @@ export function Home() {
                 </div>
             )}
         </div>
-        <ViewCommentModal/>
+        <ViewCommentModal />
     </>
 }
