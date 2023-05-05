@@ -12,12 +12,15 @@ import Loader from "../Loader/loader";
 import { fetchPost, setPosts } from "../../redux-conflig/postSlice";
 import { removePost, savePost } from "../../redux-conflig/userSlice";
 import { ViewCommentModal } from "../Modal/ViewComment.modal";
+import { useNavigate } from "react-router-dom";
 
 export function Home() {
+    const [spam,setSpam] = useState("");
     const [comment, setcomment] = useState("");
     const { user } = useSelector((state) => state.user)
     const { postList, isLoading, error } = useSelector(state => state.posts);
     const dispach = useDispatch();
+    const navigate = useNavigate();
 
 
     // do like
@@ -87,7 +90,11 @@ export function Home() {
         await axios.post(api.savePost, { userId: user._id, postId });
     }
     // save posts
-
+    const spamHandle = (postId) =>{
+        // window.alert(postId)
+        setSpam(postId);
+        navigate("/spam",{state:{postId:postId}})
+    }
 
     useEffect(() => {
         (!postList.length) && dispach(fetchPost());

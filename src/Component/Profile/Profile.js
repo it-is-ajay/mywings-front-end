@@ -1,8 +1,12 @@
 import { useSelector } from "react-redux"
 import { Navebar } from "../Navbar/Navbar"
 import "./profile.css"
+<<<<<<< HEAD
 import { EditProfile } from "../Modal/Update.Profile.modal";
 import { UserEditProfile } from "../Modal/Edit.Profile.modal";
+=======
+import { Link } from "react-router-dom";
+>>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
 
 export function Profile() {
     const { user } = useSelector(state => state.user);
@@ -19,9 +23,14 @@ export function Profile() {
                             <div className=" ProfileRow mb-3 ">
                                 <div className="UserName">{user.userName}</div>
                                 <div>
+<<<<<<< HEAD
                                     <button data-bs-toggle="modal"
                                         data-bs-target="#exampleModal" className="me-3">Edit profile</button>
                                     <img src="/img/gear-fill.svg" />
+=======
+                                    <button className="me-3" data-bs-toggle="modal" data-bs-target="#updateModal">Edit profile</button>
+                                    <img src="/img/gear-fill.svg"/>
+>>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
                                 </div>
                             </div>
                             <div className="ProfileRow mb-3 row">
@@ -42,6 +51,49 @@ export function Profile() {
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <UserEditProfile/>
+=======
+        <div className="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered">
+    <div className="modal-content">
+      <div className="modal-header" style={{backgroundColor:'#4abdac'}}>
+        <h5 className="modal-title" id="exampleModalLabel"style={{color:'white'}} >Updated Details</h5>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+      <form >
+                <div className="row">
+                    <div className="col-md-4 mt-3 me-3">
+                        <img src="/img/user.png" style={{ height: '130px', width: '130px' }} />
+                        <button className=" btn btn-primary mt-3" style={{ width: "130px", backgroundColor: '#4abdac', border: 'none' }}>Edit Profile</button>
+
+                    </div>
+                    <div className="col-md-7">
+                        <input type="text"  className="form-control mt-2" placeholder="Enter Name" />
+                        <input type="text"  className="form-control mt-2" placeholder="Enter UserName" />
+                        <input type="text"  className="form-control mt-2" placeholder="Enter Email" />
+                        <input type="text"  className="form-control mt-2" placeholder="Enter Contact" />
+                        <form className="mt-2 "  >
+                            <input type="radio" value='male' name="gender" /> male &nbsp;&nbsp;&nbsp;
+                            <input type="radio" value='female' name="gender" /> female
+                        </form>
+
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <textarea placeholder="Add Address" className="form-control text1" style={{width:'440px'}}  ></textarea>
+                </div>
+            </form>
+      </div>
+      <div className="modal-footer">
+        <Link to='/update' data-bs-dismiss="modal"style={{marginRight:'240px'}} ><button className="btn btn-link" style={{color:'#4abdac'}}>Become a artist</button> </Link>
+        {/* <button  >Become a artist</button> */}
+        <button type="button" className="btn btn-primary" style={{backgroundColor:'#4abdac',border:'none'}}>Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+>>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
     </>
 }
