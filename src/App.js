@@ -6,6 +6,7 @@ import { Profile } from './Component/Profile/Profile';
 import SignUp from './Component/User/SignUp/SignUp';
 import SignIn from './Component/User/SignIn/Signin';
 import ProtectedRoute from './Component/ProtectedRoute';
+import { FreindProfile } from './Component/Profile/FreindProfile';
 
 function App() {
   return <>
@@ -15,6 +16,7 @@ function App() {
       <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
       <Route path='/signup' element={<SignUp/>}/>
       <Route path='/signin' element={<SignIn/>}/>
+      <Route path='/userFreindProfile' element={<ProtectedRoute><FreindProfile/></ProtectedRoute>}/>
     </Routes>
 
   </>

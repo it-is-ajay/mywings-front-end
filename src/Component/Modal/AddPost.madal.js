@@ -49,9 +49,10 @@ export function AddPostModal() {
             toast.error("please select file first")
         }
     }
+    
     return <>
         <div className="modal fade" id="addPostModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog" style={{ width: "400px" }}>
+            <div className="modal-dialog modal-dialog-centered" style={{ width: "400px" }}>
                 <div className="modal-content">
                     <div className='text-end'>
                         <button onClick={uploadbutton} type="button" className="btn-close m-2" data-bs-dismiss="modal" aria-label="Close" />

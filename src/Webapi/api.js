@@ -5,5 +5,6 @@ export default{
     postcomment:"/post/comment",
     getpost:"/post/getAllPost",
     doLike:"/post/like",
-    savePost:"/user/savePost"
+    savePost:"/user/savePost",
+    getPostsById : "/post/getPostsById"
 }
