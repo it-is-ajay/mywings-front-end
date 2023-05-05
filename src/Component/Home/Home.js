@@ -17,11 +17,13 @@ import { Profile } from "../Profile/FreindProfile";
 import { useNavigate } from "react-router-dom";
 
 export function Home() {
+    const [spam, setSpam] = useState("");
     const [comment, setcomment] = useState("");
     const { user } = useSelector((state) => state.user)
     const { postList, isLoading, error } = useSelector(state => state.posts);
     const Navigate = useNavigate();
     const dispach = useDispatch();
+    const navigate = useNavigate();
 
 
     // do like
@@ -102,8 +104,13 @@ export function Home() {
     // save posts
 
     const viewFreindProfile = async (userId) => {
-        Navigate("/userFreindProfile",{ state: { userId } });
-    }   
+        Navigate("/userFreindProfile", { state: { userId } });
+    }
+    const spamHandle = (postId) => {
+        // window.alert(postId)
+        setSpam(postId);
+        navigate("/spam", { state: { postId: postId } })
+    }
 
     useEffect(() => {
         (!postList.length) && dispach(fetchPost());
@@ -121,7 +128,7 @@ export function Home() {
                 <div key={index} className="HomeScrollBox ">
                     <div className="PostHeader  mt-1">
                         <div className="p-2">
-                            <img onClick={()=>{viewFreindProfile(posts.userId._id)}} src={avtar} className="PostHeaderProfile ms-2" style={{cursor:"pointer"}}/>
+                            <img onClick={() => { viewFreindProfile(posts.userId._id) }} src={avtar} className="PostHeaderProfile ms-2" style={{ cursor: "pointer" }} />
                             <span className="ms-3">{posts.userId.name}</span>
                         </div>
                         <div className="p-2">
@@ -136,7 +143,8 @@ export function Home() {
                                             <ul>
                                                 <li><a href="#" className="link">View Profile</a></li>
                                                 <li><a href="#" className="link">Save</a></li>
-                                                <li><a href="#" className="link">Report</a></li>
+                                                {/* <li><a href="#" className="link">Report</a></li> */}
+                                                <li><button style={{ border: "none", backgroundColor: "transparent", marginLeft: "-5px" }} className="" onClick={() => spamHandle(posts._id)}>Report</button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -152,8 +160,8 @@ export function Home() {
                         {/* dynamic like button */}
                         <div className="" id={"div" + posts._id}>
                             {posts.likeItems.some((item) => item.friendUserId == user._id)
-                                ? <i onClick={() => { handleLikeClick(posts._id) }} className="bi bi-heart-fill ms-2" style={{ fontSize: '20px', color: "#ea1b3d",cursor:"pointer" }}></i>
-                                : <i onClick={() => { handleLikeClick(posts._id) }} className="bi bi-suit-heart ms-2 test" style={{ fontSize: '20px', color: "#ea1b3d",cursor:"pointer" }}></i>
+                                ? <i onClick={() => { handleLikeClick(posts._id) }} className="bi bi-heart-fill ms-2" style={{ fontSize: '20px', color: "#ea1b3d", cursor: "pointer" }}></i>
+                                : <i onClick={() => { handleLikeClick(posts._id) }} className="bi bi-suit-heart ms-2 test" style={{ fontSize: '20px', color: "#ea1b3d", cursor: "pointer" }}></i>
                             }
                         </div>
                         {/* dynamic like button */}
@@ -161,8 +169,8 @@ export function Home() {
                         {/* dynamic save button */}
                         <div className="" id={"save" + posts._id}>
                             {user.savePosts.some((item) => item.postId == posts._id)
-                                ? <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark-fill me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)",cursor:"pointer" }}></i>
-                                : <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)",cursor:"pointer" }}></i>
+                                ? <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark-fill me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)", cursor: "pointer" }}></i>
+                                : <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)", cursor: "pointer" }}></i>
                             }
                         </div>
                         {/* dynamic save button */}

@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { fetchPostById } from "../../redux-conflig/userPostSlice";
 import api from "../../Webapi/api";
 import Loader from "../Loader/loader";
+import { Link } from "react-router-dom";
 
 export function Profile() {
     const { user } = useSelector(state => state.user);
@@ -30,6 +31,10 @@ export function Profile() {
                                 <div className="col-sm-4"><span className="userSocials">1200 followers</span></div>
                                 <div className="col-sm-4"><span className="userSocials">108 following</span></div>
                             </div>
+                            {/* <div>
+                                    <button className="me-3" data-bs-toggle="modal" data-bs-target="#updateModal">Edit profile</button>
+                                    <img src="/img/gear-fill.svg"/>
+                                </div> */}
                         </ul>
                         <p className="bio">bio bio bio bio bio bio bio bio bio bio bio</p>
                     </div>
@@ -50,6 +55,45 @@ export function Profile() {
                 </div>
             </div>
         </div>
+        <div className="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered">
+    <div className="modal-content">
+      <div className="modal-header" style={{backgroundColor:'#4abdac'}}>
+        <h5 className="modal-title" id="exampleModalLabel"style={{color:'white'}} >Updated Details</h5>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+      <form >
+                <div className="row">
+                    <div className="col-md-4 mt-3 me-3">
+                        <img src="/img/user.png" style={{ height: '130px', width: '130px' }} />
+                        <button className=" btn btn-primary mt-3" style={{ width: "130px", backgroundColor: '#4abdac', border: 'none' }}>Edit Profile</button>
 
+                    </div>
+                    <div className="col-md-7">
+                        <input type="text"  className="form-control mt-2" placeholder="Enter Name" />
+                        <input type="text"  className="form-control mt-2" placeholder="Enter UserName" />
+                        <input type="text"  className="form-control mt-2" placeholder="Enter Email" />
+                        <input type="text"  className="form-control mt-2" placeholder="Enter Contact" />
+                        <form className="mt-2 "  >
+                            <input type="radio" value='male' name="gender" /> male &nbsp;&nbsp;&nbsp;
+                            <input type="radio" value='female' name="gender" /> female
+                        </form>
+
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <textarea placeholder="Add Address" className="form-control text1" style={{width:'440px'}}  ></textarea>
+                </div>
+            </form>
+      </div>
+      <div className="modal-footer">
+        <Link to='/update' data-bs-dismiss="modal"style={{marginRight:'240px'}} ><button className="btn btn-link" style={{color:'#4abdac'}}>Become a artist</button> </Link>
+        {/* <button  >Become a artist</button> */}
+        <button type="button" className="btn btn-primary" style={{backgroundColor:'#4abdac',border:'none'}}>Update</button>
+      </div>
+    </div>
+  </div>
+</div>
     </>
 }
