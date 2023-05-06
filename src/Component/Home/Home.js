@@ -128,7 +128,9 @@ export function Home() {
                 <div key={index} className="HomeScrollBox ">
                     <div className="PostHeader  mt-1">
                         <div className="p-2">
-                            <img onClick={() => { viewFreindProfile(posts.userId._id) }} src={avtar} className="PostHeaderProfile ms-2" style={{ cursor: "pointer" }} />
+                            {/* <img src={posts.userId.profilePhoto ? (api.profilepic+posts.userId.profilePhoto) : avtar} className="PostHeaderProfile ms-2" /> */}
+                            <img onClick={() => { viewFreindProfile(posts.userId._id) }} src={posts.userId.profilePhoto ? api.profilepic + posts.userId.profilePhoto : avtar} className="PostHeaderProfile ms-2" />
+
                             <span className="ms-3">{posts.userId.name}</span>
                         </div>
                         <div className="p-2">
@@ -154,7 +156,8 @@ export function Home() {
                     </div>
                     <hr className="HeaderLine mt-1" />
                     <div className="PostBox bg-secondary">
-                        <img className="Posts" src={api.file + posts.file} />
+                        {posts.type=="video/mp4" ? <video  loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
+                       
                     </div>
                     <div className="PostFunctionality">
                         {/* dynamic like button */}

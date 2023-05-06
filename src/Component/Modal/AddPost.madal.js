@@ -8,6 +8,7 @@ export function AddPostModal() {
     const [caption, setcaption] = useState("");
     const [imgpath, setimgpath] = useState(post);
     const [uploadbuttonstatus, setuploadbuttonstatus] = useState(true);
+    const [videoPath, setvideoPath] = useState(null);
     const { user } = useSelector((state) => state.user)
     let date = new Date();
     date = date.getDate() + "/" + ((date.getMonth() * 1) + 1) + "/" + date.getFullYear();
@@ -22,11 +23,11 @@ export function AddPostModal() {
 
     const uploadImage = (event) => {
         event.preventDefault();
-        setimgpath(URL.createObjectURL(event.target.files[0]));
-        setfile(event.target.files[0]);
-        setuploadbuttonstatus(false);
-
-    }
+         setimgpath(URL.createObjectURL(event.target.files[0]));
+         setfile(event.target.files[0]);
+         setuploadbuttonstatus(false);
+        }
+    
 
     const submitbutton = async (event) => {
         event.preventDefault();
@@ -61,13 +62,17 @@ export function AddPostModal() {
                     <div className="text-center">
                         <label htmlFor="file-input">
                             <img style={{ height: "250px", width: "100%" }} src={imgpath} /><br /><br />
+                            {/* <video width={320} height={240} controls="">
+                                <source src={videoPath} type="video/mp4" />
+                            </video> */}
+
                         </label>
 
                     </div>
                     <div className='text-center'>
                         <form onSubmit={submitbutton}>
                             <textarea style={{ width: "80%" }} onChange={(event) => setcaption(event.target.value)} value={caption} className="m-2" placeholder="enter caption" />
-                            <input multiple="" accept='image/jpeg,image/png,image/heic,image/heif,video/mp4,video/quicktime' onChange={uploadImage} name="file" style={{ display: "none" }} id="file-input" type="file" /><br />
+                            <input multiple="" accept='image/jpeg,image/png,video/mp4' onChange={uploadImage} name="file" style={{ display: "none" }} id="file-input" type="file" /><br />
                             <button disabled={uploadbuttonstatus} className='m-2 btn btn-success' style={{ width: "80%" }} data-bs-dismiss="modal" type="submit">upload</button><br />
 
                             <br />
