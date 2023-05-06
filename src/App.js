@@ -8,6 +8,7 @@ import SignIn from './Component/User/SignIn/Signin';
 import ProtectedRoute from './Component/ProtectedRoute';
 import Span from './Component/Spam/spam';
 import UpdateDetails from './Component/Update/update';
+import About from './Component/About/about';
 
 function App() {
   return <>
@@ -19,6 +20,7 @@ function App() {
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/spam' element={<Span/>}/>
       <Route path='/update' element={<UpdateDetails/>}/>
+      <Route path='/about' element={<About/>}/>
     </Routes>
 
   </>
