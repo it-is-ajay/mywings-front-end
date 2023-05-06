@@ -7,6 +7,7 @@ export default{
     getpost:"/post/getAllPost",
     doLike:"/post/like",
     savePost:"/user/savePost",
+    getPostsById : "/post/getPostsById",
     colabrate:"/user/collabrationDetails",
     help:"user/help",
     updateprofile:"/user/updateprofile"

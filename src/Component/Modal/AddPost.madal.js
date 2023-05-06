@@ -9,6 +9,7 @@ export function AddPostModal() {
     const [imgpath, setimgpath] = useState(post);
     const [uploadbuttonstatus, setuploadbuttonstatus] = useState(true);
     const [videoPath, setvideoPath] = useState(null);
+    const [poststatus,setpoststatus]=useState(true);
     const { user } = useSelector((state) => state.user)
     let date = new Date();
     date = date.getDate() + "/" + ((date.getMonth() * 1) + 1) + "/" + date.getFullYear();
@@ -16,18 +17,33 @@ export function AddPostModal() {
     const uploadbutton = () => {
         setuploadbuttonstatus(true)
         setimgpath(post)
+        setpoststatus(true)
         setcaption("")
+        setvideoPath("")
     }
 
     let locationOfYour = "indore";
 
     const uploadImage = (event) => {
         event.preventDefault();
-         setimgpath(URL.createObjectURL(event.target.files[0]));
-         setfile(event.target.files[0]);
-         setuploadbuttonstatus(false);
+        let file = event.target.files[0];
+        if (file.type.startsWith('image/')) {
+            setpoststatus(true)
+            setimgpath(URL.createObjectURL(event.target.files[0]));
+            setfile(event.target.files[0]);
+            setuploadbuttonstatus(false);
+        } else if (file.type.startsWith('video/')) {
+            setpoststatus(false)
+            console.log("inside video")
+            setvideoPath(URL.createObjectURL(event.target.files[0]));
+            setfile(event.target.files[0]);
+            setuploadbuttonstatus(false);
+
         }
-    
+
+
+    }
+
 
     const submitbutton = async (event) => {
         event.preventDefault();
@@ -45,6 +61,9 @@ export function AddPostModal() {
                 setimgpath(post);
                 setcaption("")
                 toast("post uploaded");
+                setvideoPath(null)
+                setpoststatus(true)
+                setuploadbuttonstatus(true)
             }
         } catch (err) {
             toast.error("please select file first")
@@ -60,11 +79,10 @@ export function AddPostModal() {
 
                     <div className="text-center">
                         <label htmlFor="file-input">
-                            <img style={{ height: "250px", width: "100%" }} src={imgpath} /><br /><br />
-                            {/* <video width={320} height={240} controls="">
-                                <source src={videoPath} type="video/mp4" />
-                            </video> */}
-
+                        {/* <img style={{ height: "250px", width: "100%" }} src={imgpath} /> */}
+                           {poststatus ?<img style={{ height: "250px", width: "100%" }} src={imgpath} />:
+                            <video style={{width:'100%',height: "250px"}} loop src={videoPath} autoPlay="true" />}
+                            <br></br><br></br>
                         </label>
 
                     </div>
@@ -82,5 +100,5 @@ export function AddPostModal() {
                 </div>
             </div>
         </div>
-    </>
+    </>
 }

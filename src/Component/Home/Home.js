@@ -1,4 +1,5 @@
 import { Navebar } from "../Navbar/Navbar"
+import _ from 'lodash';
 import "./home.css";
 import { useEffect, useId } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +13,15 @@ import Loader from "../Loader/loader";
 import { fetchPost, setPosts } from "../../redux-conflig/postSlice";
 import { removePost, savePost } from "../../redux-conflig/userSlice";
 import { ViewCommentModal } from "../Modal/ViewComment.modal";
+import { Profile } from "../Profile/FreindProfile";
 import { useNavigate } from "react-router-dom";
 
 export function Home() {
-    const [spam,setSpam] = useState("");
+    const [spam, setSpam] = useState("");
     const [comment, setcomment] = useState("");
     const { user } = useSelector((state) => state.user)
     const { postList, isLoading, error } = useSelector(state => state.posts);
+    const Navigate = useNavigate();
     const dispach = useDispatch();
     const navigate = useNavigate();
 
@@ -26,20 +29,29 @@ export function Home() {
     // do like
     const doLike = async (postId) => {
         const divElement = document.getElementById("div" + postId);
-        let postIndex = await postList.findIndex((posts) => posts._id == postId);
-        const iconElement = divElement.querySelector('i');
-        if (iconElement && iconElement.classList.contains('bi-suit-heart')) {
-            let updatedPost = await { ...postList[postIndex], likeItems: [...postList[postIndex].likeItems, { friendUserId: user._id }] };
-            let updatedPostList = [...postList.slice(0, postIndex), updatedPost, ...postList.slice(postIndex + 1)];
-            dispach(setPosts(updatedPostList));
-        } else if (iconElement && iconElement.classList.contains('bi-heart-fill')) {
-            let likeIndex = await postList[postIndex].likeItems.findIndex((data) => data.friendUserId == user._id);
-            let updatedLikeItems = [...postList[postIndex].likeItems.slice(0, likeIndex), ...postList[postIndex].likeItems.slice(likeIndex + 1)];
-            let updatedPost = { ...postList[postIndex], likeItems: updatedLikeItems };
-            let updatedPostList = [...postList.slice(0, postIndex), updatedPost, ...postList.slice(postIndex + 1)];
-            dispach(setPosts(updatedPostList));
+        let response = await axios.post(api.doLike, { postId, friendUserId: user._id });
+        if (response.data.status) {
+            let postIndex = await postList.findIndex((posts) => posts._id == postId);
+            const iconElement = divElement.querySelector('i');
+            if (iconElement && iconElement.classList.contains('bi-suit-heart')) {
+                let updatedPost = await { ...postList[postIndex], likeItems: [...postList[postIndex].likeItems, { friendUserId: user._id }] };
+                let updatedPostList = [...postList.slice(0, postIndex), updatedPost, ...postList.slice(postIndex + 1)];
+                dispach(setPosts(updatedPostList));
+            } else if (iconElement && iconElement.classList.contains('bi-heart-fill')) {
+                let likeIndex = await postList[postIndex].likeItems.findIndex((data) => data.friendUserId == user._id);
+                let updatedLikeItems = [...postList[postIndex].likeItems.slice(0, likeIndex), ...postList[postIndex].likeItems.slice(likeIndex + 1)];
+                let updatedPost = { ...postList[postIndex], likeItems: updatedLikeItems };
+                let updatedPostList = [...postList.slice(0, postIndex), updatedPost, ...postList.slice(postIndex + 1)];
+                dispach(setPosts(updatedPostList));
+            }
+        } else {
+            toast.error("intenal server error")
         }
-        await axios.post(api.doLike, { postId, friendUserId: user._id })
+    }
+    const doLikeDebounced = _.debounce(doLike, 500);
+
+    const handleLikeClick = (postId) => {
+        doLikeDebounced(postId);
     }
     // do like
 
@@ -90,11 +102,41 @@ export function Home() {
         await axios.post(api.savePost, { userId: user._id, postId });
     }
     // save posts
-    const spamHandle = (postId) =>{
+
+    const viewFreindProfile = async (userId) => {
+        Navigate("/userFreindProfile", { state: { userId } });
+    }
+    const spamHandle = (postId) => {
         // window.alert(postId)
         setSpam(postId);
-        navigate("/spam",{state:{postId:postId}})
+        navigate("/spam", { state: { postId: postId } })
     }
+
+    //..........................................
+    const videos = document.querySelectorAll('.video');
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5 
+        };
+    
+    const handleIntersection = async (entries, observer) => {
+      entries.forEach( async (entry) => {
+        if (entry.isIntersecting) {
+            console.log("play");
+           await entry.target.play();
+        } else {
+            console.log("pause");
+           await entry.target.pause();
+        }
+      });
+    };
+    const observer = new IntersectionObserver(handleIntersection, options);
+    videos.forEach(video => {
+      observer.observe(video);
+    });
+
+    //...................................................
 
     useEffect(() => {
         (!postList.length) && dispach(fetchPost());
@@ -113,7 +155,7 @@ export function Home() {
                     <div className="PostHeader  mt-1">
                         <div className="p-2">
                             {/* <img src={posts.userId.profilePhoto ? (api.profilepic+posts.userId.profilePhoto) : avtar} className="PostHeaderProfile ms-2" /> */}
-                            <img src={posts.userId.profilePhoto ? api.profilepic + posts.userId.profilePhoto : avtar} className="PostHeaderProfile ms-2" />
+                            <img onClick={() => { viewFreindProfile(posts.userId._id) }} src={posts.userId.profilePhoto ? api.profilepic + posts.userId.profilePhoto : avtar} className="PostHeaderProfile ms-2" />
 
                             <span className="ms-3">{posts.userId.name}</span>
                         </div>
@@ -128,8 +170,9 @@ export function Home() {
                                         <div>
                                             <ul>
                                                 <li><a href="#" className="link">View Profile</a></li>
-                                                <li><a href="#" className="link">Save</a></li>
-                                                <li><a href="#" className="link">Report</a></li>
+                                              
+                                                {/* <li><a href="#" className="link">Report</a></li> */}
+                                                <li><button style={{ border: "none", backgroundColor: "transparent", marginLeft: "-5px" }} className="" onClick={() => spamHandle(posts._id)}>Report</button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -139,15 +182,15 @@ export function Home() {
                     </div>
                     <hr className="HeaderLine mt-1" />
                     <div className="PostBox bg-secondary">
-                        {posts.type=="video/mp4" ? <video  loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
+                        {posts.type=="video/mp4" ? <video className="video" loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
                        
                     </div>
                     <div className="PostFunctionality">
                         {/* dynamic like button */}
                         <div className="" id={"div" + posts._id}>
                             {posts.likeItems.some((item) => item.friendUserId == user._id)
-                                ? <i onClick={() => { doLike(posts._id) }} className="bi bi-heart-fill ms-2" style={{ fontSize: '20px', color: "#ea1b3d" }}></i>
-                                : <i onClick={() => { doLike(posts._id) }} className="bi bi-suit-heart ms-2 test" style={{ fontSize: '20px', color: "#ea1b3d" }}></i>
+                                ? <i onClick={() => { handleLikeClick(posts._id) }} className="bi bi-heart-fill ms-2" style={{ fontSize: '20px', color: "#ea1b3d", cursor: "pointer" }}></i>
+                                : <i onClick={() => { handleLikeClick(posts._id) }} className="bi bi-suit-heart ms-2 test" style={{ fontSize: '20px', color: "#ea1b3d", cursor: "pointer" }}></i>
                             }
                         </div>
                         {/* dynamic like button */}
@@ -155,8 +198,8 @@ export function Home() {
                         {/* dynamic save button */}
                         <div className="" id={"save" + posts._id}>
                             {user.savePosts.some((item) => item.postId == posts._id)
-                                ? <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark-fill me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)" }}></i>
-                                : <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)" }}></i>
+                                ? <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark-fill me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)", cursor: "pointer" }}></i>
+                                : <i onClick={() => { savePosts(posts._id) }} className="bi bi-bookmark me-2 " style={{ fontSize: '20px', color: "rgb(0, 94, 255)", cursor: "pointer" }}></i>
                             }
                         </div>
                         {/* dynamic save button */}

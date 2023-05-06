@@ -1,4 +1,3 @@
-
 import { Navebar } from '../Navbar/Navbar'
 import './about.css';
 export default function About() {
@@ -35,29 +34,6 @@ If you want any type of collaboration kindly contact us.</h5>
             </div>
         </div><br/>
 
-        {/* <div className="container" id='divFirst'>
-            <div className='aboutBox mt-2'>
-                <div className='aboutBoxImage' >
-                    <img id='imageArtist' src='/img/arijit.jpg' />
-                </div>
-                <div className='aboutBoxContent'>
-                    <h1>About</h1>
-                    <h5 id='about1'>Arijit Singh is an Indian singer and music composer. The recipient of several accolades including a National Film Award and seven Filmfare Awards, he has recorded songs in several Indian languages. He is also known for his humble personality and simple lifestyle</h5>
-                </div>
-            </div>
-        </div><br />
-
-        <div className="container" id='divFirst'>
-            <div className='aboutBox mt-5'>
-                <div className='aboutBoxContent'>
-                    <h1>Collaboration</h1>
-                    <h5>The creator of the post will have to send a collaboration request to another user. On acceptance, the collab post will appear in the timeline of the original author and collaborators. The original author can add or remove a collaborator at any time. If the original author deletes the post, it will be removed from the collaborator's profile as well.</h5>
-                </div>
-                <div className='aboutBoxImage' >
-                    <img id='aboutBoxContentImage' src='/img/collaboration.jpeg' />
-                </div>
-            </div>
-        </div><br/> */}
 
         <div className='container-fluid' >
             <div className='row footer'>
