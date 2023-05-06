@@ -9,6 +9,7 @@ import ProtectedRoute from './Component/ProtectedRoute';
 import { FreindProfile } from './Component/Profile/FreindProfile';
 import Spam from './Component/Spam/spam';
 import UpdateDetails from './Component/Update/update';
+import About from './Component/About/about';
 
 function App() {
   return <>
