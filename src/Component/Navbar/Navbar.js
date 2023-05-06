@@ -1,14 +1,27 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Navbar/navbar.css';
 import { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SearchModal } from '../Modal/Search.modal';
 import { AddPostModal } from '../Modal/AddPost.madal';
+import { Collebration } from '../Modal/Collebration.modal';
+import { setToken, setUser } from '../../redux-conflig/userSlice';
+import Avtar from "../../user.png"
+import api from '../../Webapi/api';
+
 export function Navebar() {
   const { user } = useSelector((state) => state.user)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    dispatch(setUser(""));
+    dispatch(setToken(""));
+    navigate("/");
+  }
 
   return <>
     <ToastContainer />
@@ -29,10 +42,11 @@ export function Navebar() {
               <Link className='navLinks' to="/about"> About </Link>
             </li>
             <li className="nav-item " style={{ marginTop: '-5px' }}>
-              <Link className='navLinks' to="/collaborate"> Collaborate </Link>
+            <a data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop" className='navLinks'> Collaborate </a>
             </li>
             <li className="nav-item " style={{ marginTop: '-5px' }}>
-              <Link className='navLinks' to="/signup"> Sign Up </Link>
+            <Link className='navLinks' onClick={signOut} > Sign Out </Link>
             </li>
           </ul>
           <div className="d-flex">
@@ -55,7 +69,9 @@ export function Navebar() {
               </a>
             </div>
             <Link className="nav-link" to="/profile">
-              <img src="/img/user.png" style={{ height: "25px", width: "25px", borderRadius: "50%" }} />
+              {/* <img src={user.profilePhoto ?api.profilepic+user.profilePhoto : Avtar} style={{ height: "25px", width: "25px", borderRadius: "50%" }} /> */}
+              <img src={user.profilePhoto?api.profilepic+user.profilePhoto: Avtar} style={{ height: "25px", width: "25px", borderRadius: "50%" }} />
+
             </Link>
           </div>
         </div>
@@ -63,5 +79,6 @@ export function Navebar() {
     </nav>
     <AddPostModal/>
     <SearchModal/>
+    <Collebration/>
   </>
 }

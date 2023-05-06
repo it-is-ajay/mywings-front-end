@@ -214,3 +214,75 @@
         width: 100%;
     }
 }
+
+/* collabration */
+.mbutton {
+    display: inline-block;
+    background-color: #4abdac;
+    border-radius: 6px;
+    height: 37px;
+    border: none;
+    width: 120px;
+    color: white;
+    font-size: 20px;
+  }
+  
+  .colloborationInput {
+    font-size: 20px;
+    height: 35px;
+  }
+  
+  .colloborationInput::placeholder {
+    color: #4abdac;
+  }
+
+/* collabration */
+/* update profile modal */
+.updateprofileinput{
+    font-size: 20px;
+    height: 35px;
+    width:100%;
+}
+.updateprofileinput::placeholder{
+    color: #4abdac;
+}
+
+.editprofileheader{
+    color: white;
+    font-weight: 900px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.inputpic_lable{
+    font-size: 16px;
+    background-color: #4abdac;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight:700;
+    color: white;
+    margin-top:20px;
+    
+}
+.editprofiletextarea{
+    width: 100%;
+}
+.UserProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profilepic{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+.inputpicsubmit{
+    font-size: 16px;
+    background-color: #4abdac;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight:700;
+    color: white;
+}
+.beArtist{
+    margin-top:10px;
+}
+
+/* update profile modal*/
