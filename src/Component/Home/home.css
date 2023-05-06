@@ -323,3 +323,7 @@
       margin: 0;
     }
   }
+.PostBox video{
+  width:100%;
+  height:100%;
+}

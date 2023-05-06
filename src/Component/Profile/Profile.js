@@ -1,25 +1,36 @@
 import { useSelector } from "react-redux"
 import { Navebar } from "../Navbar/Navbar"
 import "./profile.css"
+<<<<<<< HEAD
+import { EditProfile } from "../Modal/Update.Profile.modal";
+import { UserEditProfile } from "../Modal/Edit.Profile.modal";
+=======
 import { Link } from "react-router-dom";
+>>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
 
 export function Profile() {
-    const {user} = useSelector(state=>state.user);
+    const { user } = useSelector(state => state.user);
     return <>
         <Navebar />
-        <div className="d-flex justify-content-center" style={{ height: "100vh", marginTop: "-15px"}}>
-            <div className="d-flex flex-column align-item-center" style={{ height: "100vh", width: "80%",backgroundColor:"whitesmoke"}}>
+        <div className="d-flex justify-content-center" style={{ height: "100vh", marginTop: "-15px" }}>
+            <div className="d-flex flex-column align-item-center" style={{ height: "100vh", width: "80%", backgroundColor: "whitesmoke" }}>
                 <div className="ProfileHead row">
                     <div className="col-lg-3 d-flex UserProfile" style={{ height: "100%" }}>
-                        <img src="/img/user.png"/>
+                        <img src="/img/user.png" />
                     </div>
                     <div className="col-lg-9 d-flex" style={{ height: "100%" }}>
                         <div className=" ProfileContent">
                             <div className=" ProfileRow mb-3 ">
                                 <div className="UserName">{user.userName}</div>
                                 <div>
+<<<<<<< HEAD
+                                    <button data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" className="me-3">Edit profile</button>
+                                    <img src="/img/gear-fill.svg" />
+=======
                                     <button className="me-3" data-bs-toggle="modal" data-bs-target="#updateModal">Edit profile</button>
                                     <img src="/img/gear-fill.svg"/>
+>>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
                                 </div>
                             </div>
                             <div className="ProfileRow mb-3 row">
@@ -33,13 +44,16 @@ export function Profile() {
                         </div>
                     </div>
                 </div>
-                <hr/>
+                <hr />
 
                 <div className="PostBox">
-                    
+
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
+        <UserEditProfile/>
+=======
         <div className="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog modal-dialog-centered">
     <div className="modal-content">
@@ -80,5 +94,6 @@ export function Profile() {
     </div>
   </div>
 </div>
+>>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
     </>
 }

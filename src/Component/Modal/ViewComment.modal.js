@@ -8,7 +8,7 @@ export function ViewCommentModal() {
                 </div>
                 <div class="popup__text">
                 </div>
-                <a class="popup__close" href="#">X</a>
+                <a class="popup__close">X</a>
             </div>
         </div>
     </>
