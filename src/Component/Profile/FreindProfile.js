@@ -7,6 +7,7 @@ import api from "../../Webapi/api";
 import Loader from "../Loader/loader";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import Avatar from "../../user.png";
 import axios from "axios";
 
 export function FreindProfile() {
@@ -18,6 +19,7 @@ export function FreindProfile() {
 
 
     const getUser = () => {
+
         Promise.all([axios.get("/user/searchById/" + userId), axios.post(api.getPostsById, { userId })]).then(result => {
             setUser(result[0].data.user);
             setPosts(result[1].data.posts);
@@ -35,7 +37,9 @@ export function FreindProfile() {
             <div className="main-profile-container">
                 <div className="profile-header ">
                     <div className="profile-photo">
-                        <img src="/img/user.png" alt="Profile Photo" />
+                        {
+                           (user) && <img src={user.profilePhoto ? api.profilepic+user.profilePhoto : Avatar} alt="Profile Photo" /> 
+                        }
                     </div>
                     <div className="profile-info  w-75">
                         {(user)
@@ -61,14 +65,14 @@ export function FreindProfile() {
                 <div className="user-post-grid p-5">
                     {(posts.length) &&
                         posts.map((posts, index) =>
-                            <div key={index} className="product-item user-post bg-danger">
-                                <img src={api.file + posts.file} />
+                            <div key={index} className="product-item user-post d-flex justify-content-center" style={{ color: "lightgray" }}>
+                                {posts.type=="video/mp4" ? <video className="video Posts" loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
+                                {/* <img src={api.file + posts.file} /> */}
                                 <div className="product-action">
                                     <a className="btn" href="" style={{ display: "flex", flexDirection: "column" }}><i className="bi bi-heart-fill" style={{ color: "crimson", fontSize: "25px" }}></i><span style={{ color: "white" }}> {posts.likeItems.length} likes</span></a>
-
                                 </div>
                             </div>
-                    )}
+                        )}
                 </div>
             </div>
         </div>

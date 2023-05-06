@@ -112,6 +112,32 @@ export function Home() {
         navigate("/spam", { state: { postId: postId } })
     }
 
+    //..........................................
+    const videos = document.querySelectorAll('.video');
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5 
+        };
+    
+    const handleIntersection = async (entries, observer) => {
+      entries.forEach( async (entry) => {
+        if (entry.isIntersecting) {
+            console.log("play");
+           await entry.target.play();
+        } else {
+            console.log("pause");
+           await entry.target.pause();
+        }
+      });
+    };
+    const observer = new IntersectionObserver(handleIntersection, options);
+    videos.forEach(video => {
+      observer.observe(video);
+    });
+
+    //...................................................
+
     useEffect(() => {
         (!postList.length) && dispach(fetchPost());
     }, [])
@@ -144,7 +170,7 @@ export function Home() {
                                         <div>
                                             <ul>
                                                 <li><a href="#" className="link">View Profile</a></li>
-                                                <li><a href="#" className="link">Save</a></li>
+                                              
                                                 {/* <li><a href="#" className="link">Report</a></li> */}
                                                 <li><button style={{ border: "none", backgroundColor: "transparent", marginLeft: "-5px" }} className="" onClick={() => spamHandle(posts._id)}>Report</button></li>
                                             </ul>
@@ -156,7 +182,7 @@ export function Home() {
                     </div>
                     <hr className="HeaderLine mt-1" />
                     <div className="PostBox bg-secondary">
-                        {posts.type=="video/mp4" ? <video  loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
+                        {posts.type=="video/mp4" ? <video className="video" loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
                        
                     </div>
                     <div className="PostFunctionality">
