@@ -35,9 +35,9 @@ export function EditUserProfile() {
 
         try {
             let response = await axios.post(api.updateprofile, formData);
+            let updatedUser = await axios.get("/user/searchById/" + user._id);
             toast.success("user Updated");
-            let user = response.data.user;
-            dispatch(setUser({ ...user, user }))
+            dispatch(setUser({ ...user,profilePhoto : updatedUser.data.user.profilePhoto }))
 
         } catch (err) {
             console.log("in catch");

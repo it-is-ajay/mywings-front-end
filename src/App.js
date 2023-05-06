@@ -22,6 +22,7 @@ function App() {
       <Route path='/userFreindProfile' element={<ProtectedRoute><FreindProfile/></ProtectedRoute>}/>
       <Route path='/spam' element={<ProtectedRoute><Spam/></ProtectedRoute>}/>
       <Route path='/update' element={<ProtectedRoute><UpdateDetails/></ProtectedRoute>}/>
+      <Route path='/about' element={<ProtectedRoute><About/></ProtectedRoute>}/>
     </Routes>
 
   </>

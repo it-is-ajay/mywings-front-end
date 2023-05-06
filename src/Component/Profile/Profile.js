@@ -34,7 +34,7 @@ export function Profile() {
                             </div>
                             <div>
                                 <button className="me-3" data-bs-toggle="modal" data-bs-target="#updateModal">Edit profile</button>
-                                <img src="/img/gear-fill.svg" />
+                                {/* <img src="/img/gear-fill.svg" /> */}
                             </div>
                         </ul>
                         <p className="bio">bio bio bio bio bio bio bio bio bio bio bio</p>

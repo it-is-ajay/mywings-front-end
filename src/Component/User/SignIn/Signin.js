@@ -43,7 +43,7 @@ function SignIn() {
                             <input className="ps-3 input1" onChange={(event) => setPassword(event.target.value)} type="password" required placeholder="Enter Password" />
                             <a id="a" href="" className="link">
                                 {" "}
-                                <small>forgot Password?</small>
+                                {/* <small>forgot Password?</small> */}
                             </a>
                             <button className="btn btn-dark btn-success1">Log In</button>
                         </form>

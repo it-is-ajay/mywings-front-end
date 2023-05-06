@@ -1,9 +1,13 @@
 import { useState } from "react"
 import "./modal.css"
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Avatar from "../../user.png";
+import api from "../../Webapi/api";
 export function SearchModal() {
     const [keyword, setKeyword] = useState("");
     const [data, setData] = useState([]);
+    const Navigate = useNavigate();
     const searchHere = async () => {
         try {
             let response = await axios.get("http://localhost:3000/user/searchProfile/" + keyword);
@@ -22,6 +26,11 @@ export function SearchModal() {
         catch(err){
             console.log(err);
         }
+    }
+
+
+    const viewProfile = async (userId) => {
+        Navigate("/userFreindProfile", { state: { userId } });
     }
 
     return <>
@@ -47,10 +56,11 @@ export function SearchModal() {
                             {data.map((keyword, index) =>
                                 <div id="searchBox" className="mt-2 d-flex justify-content-between  searchResult">
                                     <div>
+                                        <img style={{ height: "25px", width: "25px", borderRadius: "50%" }} className="me-1" src={keyword.profilePhoto ? api.profilepic+keyword.profilePhoto : Avatar} alt="" />
                                         {keyword.userName}
                                     </div>
                                     <div >
-                                        <a id="viewBox">View</a>
+                                        <a data-bs-dismiss="modal" aria-label="Close" onClick={() => { viewProfile(keyword._id) }} id="viewBox">View</a>
                                     </div>
                                 </div>
                             )}

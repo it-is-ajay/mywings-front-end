@@ -63,16 +63,7 @@ export function FreindProfile() {
                 <hr />
                 <section className="w-100" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{(!posts.length) && <Loader />}</section>
                 <div className="user-post-grid p-5">
-                    {(posts.length) &&
-                        posts.map((posts, index) =>
-                            <div key={index} className="product-item user-post d-flex justify-content-center" style={{ color: "lightgray" }}>
-                                {posts.type=="video/mp4" ? <video className="video Posts" loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
-                                {/* <img src={api.file + posts.file} /> */}
-                                <div className="product-action">
-                                    <a className="btn" href="" style={{ display: "flex", flexDirection: "column" }}><i className="bi bi-heart-fill" style={{ color: "crimson", fontSize: "25px" }}></i><span style={{ color: "white" }}> {posts.likeItems.length} likes</span></a>
-                                </div>
-                            </div>
-                        )}
+                    {(posts.length!=0) && posts.map((posts, index) => <div key={index} className="product-item user-post d-flex justify-content-center" style={{ color: "lightgray" }}>{posts.type=="video/mp4" ? <video className="video Posts" loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}<div className="product-action"><a className="btn" href="" style={{ display: "flex", flexDirection: "column" }}><i className="bi bi-heart-fill" style={{ color: "crimson", fontSize: "25px" }}></i><span style={{ color: "white" }}> {posts.likeItems.length} likes</span></a></div></div>)}
                 </div>
             </div>
         </div>
