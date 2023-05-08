@@ -1,12 +1,8 @@
 import { useSelector } from "react-redux"
 import { Navebar } from "../Navbar/Navbar"
 import "./profile.css"
-<<<<<<< HEAD
-import { EditProfile } from "../Modal/Update.Profile.modal";
-import { UserEditProfile } from "../Modal/Edit.Profile.modal";
-=======
 import { Link } from "react-router-dom";
->>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
+import { UserEditProfile } from "../Modal/Edit.Profile.modal";
 
 export function Profile() {
     const { user } = useSelector(state => state.user);
@@ -23,14 +19,8 @@ export function Profile() {
                             <div className=" ProfileRow mb-3 ">
                                 <div className="UserName">{user.userName}</div>
                                 <div>
-<<<<<<< HEAD
-                                    <button data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" className="me-3">Edit profile</button>
-                                    <img src="/img/gear-fill.svg" />
-=======
                                     <button className="me-3" data-bs-toggle="modal" data-bs-target="#updateModal">Edit profile</button>
                                     <img src="/img/gear-fill.svg"/>
->>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
                                 </div>
                             </div>
                             <div className="ProfileRow mb-3 row">
@@ -51,9 +41,7 @@ export function Profile() {
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
         <UserEditProfile/>
-=======
         <div className="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog modal-dialog-centered">
     <div className="modal-content">
@@ -88,12 +76,12 @@ export function Profile() {
       </div>
       <div className="modal-footer">
         <Link to='/update' data-bs-dismiss="modal"style={{marginRight:'240px'}} ><button className="btn btn-link" style={{color:'#4abdac'}}>Become a artist</button> </Link>
-        {/* <button  >Become a artist</button> */}
+      
         <button type="button" className="btn btn-primary" style={{backgroundColor:'#4abdac',border:'none'}}>Update</button>
       </div>
     </div>
   </div>
 </div>
->>>>>>> fc06514b447b69cf9cfaf6fed59adfaf11c2fe8e
+
     </>
 }

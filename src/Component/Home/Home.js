@@ -13,6 +13,7 @@ import { fetchPost, setPosts } from "../../redux-conflig/postSlice";
 import { removePost, savePost } from "../../redux-conflig/userSlice";
 import { ViewCommentModal } from "../Modal/ViewComment.modal";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 export function Home() {
     const [spam,setSpam] = useState("");
@@ -21,7 +22,6 @@ export function Home() {
     const { postList, isLoading, error } = useSelector(state => state.posts);
     const dispach = useDispatch();
     const navigate = useNavigate();
-
 
     // do like
     const doLike = async (postId) => {
@@ -96,11 +96,36 @@ export function Home() {
         navigate("/spam",{state:{postId:postId}})
     }
 
+    //..........................................
+    const videos = document.querySelectorAll('.video');
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5 
+        };
+    
+    const handleIntersection = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.play();
+        } else {
+          entry.target.pause();
+        }
+      });
+    };
+    const observer = new IntersectionObserver(handleIntersection, options);
+    videos.forEach(video => {
+      observer.observe(video);
+    });
+
+    //...................................................
+
     useEffect(() => {
         (!postList.length) && dispach(fetchPost());
     }, [])
 
 
+    
     return <>
         <Navebar />
         <ToastContainer />
@@ -139,7 +164,7 @@ export function Home() {
                     </div>
                     <hr className="HeaderLine mt-1" />
                     <div className="PostBox bg-secondary">
-                        {posts.type=="video/mp4" ? <video  loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
+                        {posts.type=="video/mp4" ? <video className="video"  loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
                        
                     </div>
                     <div className="PostFunctionality">
