@@ -89,7 +89,7 @@ export function Collebration() {
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button onClick={clearinputfeild} type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onClick={clearinputfeild} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button onClick={collebrationform} type="submit" className="mbutton">Submit</button>
 
                         <input  id="btnSave" type="button" hidden="true" data-bs-dismiss="modal" />

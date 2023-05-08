@@ -100,5 +100,5 @@ export function AddPostModal() {
                 </div>
             </div>
         </div>
-    </>
+    </>
 }

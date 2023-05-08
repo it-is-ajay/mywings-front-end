@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export function EditProfile() {
-    const { user } = useSelector((state) => state.user)
+    const { user } = useSelector(state => state.user);
     const [name, setName] = useState(user.name);
     const [userName, setUserName] = useState(user.userName);
     const [email, setEmail] = useState(user.email);
