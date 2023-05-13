@@ -67,6 +67,7 @@ export function SearchModal() {
 
                         </div>
                     </div>
+                  
                 </div>
             </div>
         </div>

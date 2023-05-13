@@ -15,6 +15,7 @@ import { removePost, savePost } from "../../redux-conflig/userSlice";
 import { ViewCommentModal } from "../Modal/ViewComment.modal";
 import { Profile } from "../Profile/FreindProfile";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 export function Home() {
     const [spam, setSpam] = useState("");
@@ -24,7 +25,6 @@ export function Home() {
     const Navigate = useNavigate();
     const dispach = useDispatch();
     const navigate = useNavigate();
-
 
     // do like
     const doLike = async (postId) => {
@@ -120,14 +120,12 @@ export function Home() {
       threshold: 0.5 
         };
     
-    const handleIntersection = async (entries, observer) => {
-      entries.forEach( async (entry) => {
+    const handleIntersection = (entries, observer) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-            console.log("play");
-           await entry.target.play();
+          entry.target.play();
         } else {
-            console.log("pause");
-           await entry.target.pause();
+          entry.target.pause();
         }
       });
     };
@@ -143,6 +141,7 @@ export function Home() {
     }, [])
 
 
+    
     return <>
         <Navebar />
         <ToastContainer />
@@ -182,7 +181,7 @@ export function Home() {
                     </div>
                     <hr className="HeaderLine mt-1" />
                     <div className="PostBox bg-secondary">
-                        {posts.type=="video/mp4" ? <video className="video" loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
+                        {posts.type=="video/mp4" ? <video className="video"  loop src={api.file + posts.file} autoPlay="true"  />:<img className="Posts" src={api.file + posts.file} />}
                        
                     </div>
                     <div className="PostFunctionality">
